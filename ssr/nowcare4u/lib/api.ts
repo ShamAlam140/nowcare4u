@@ -4,8 +4,8 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 // In development, use the proxy (/api)
 // In production, use the full backend URL
 export const API_BASE_URL = isDevelopment
-    ? 'http://localhost:5000/api'
-    : 'https://nowcare4-u-production-acbz.vercel.app/api';
+    ? 'https://nowcare4u.onrender.com/api'
+    : 'https://nowcare4u.onrender.com/api';
 
 /**
  * Helper function to build API URLs

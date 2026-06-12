@@ -2,6 +2,10 @@ import { create } from 'zustand';
 import type { Invoice } from '../types/invoice.types';
 import { invoiceService } from '../service/invoice.service';
 
+const getErrorMessage = (error: unknown, fallback: string) => (
+    error instanceof Error && error.message ? error.message : fallback
+);
+
 interface InvoiceStore {
     invoices: Invoice[];
     currentInvoice: Invoice | null;
@@ -35,9 +39,9 @@ export const useInvoiceStore = create<InvoiceStore>((set) => ({
                 pagination: response.pagination,
                 loading: false
             });
-        } catch (error: any) {
+        } catch (error) {
             set({
-                error: error.response?.data?.message || 'Failed to fetch invoices',
+                error: getErrorMessage(error, 'Failed to fetch invoices'),
                 loading: false
             });
         }
@@ -48,9 +52,9 @@ export const useInvoiceStore = create<InvoiceStore>((set) => ({
         try {
             const invoice = await invoiceService.getInvoiceById(token, id);
             set({ currentInvoice: invoice, loading: false });
-        } catch (error: any) {
+        } catch (error) {
             set({
-                error: error.response?.data?.message || 'Failed to fetch invoice',
+                error: getErrorMessage(error, 'Failed to fetch invoice'),
                 loading: false
             });
         }
@@ -64,9 +68,9 @@ export const useInvoiceStore = create<InvoiceStore>((set) => ({
                 invoices: [newInvoice, ...state.invoices],
                 loading: false
             }));
-        } catch (error: any) {
+        } catch (error) {
             set({
-                error: error.response?.data?.message || 'Failed to create invoice',
+                error: getErrorMessage(error, 'Failed to create invoice'),
                 loading: false
             });
             throw error;
@@ -82,9 +86,9 @@ export const useInvoiceStore = create<InvoiceStore>((set) => ({
                 currentInvoice: state.currentInvoice?._id === id ? updatedInvoice : state.currentInvoice,
                 loading: false
             }));
-        } catch (error: any) {
+        } catch (error) {
             set({
-                error: error.response?.data?.message || 'Failed to update invoice status',
+                error: getErrorMessage(error, 'Failed to update invoice status'),
                 loading: false
             });
             throw error;
