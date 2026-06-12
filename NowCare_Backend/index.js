@@ -24,7 +24,8 @@ app.use(cors({
   origin: [
     'https://nowcare4u-f1e6a.web.app',
     'https://nowcare4u.com',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'https://nowcare4u.vercel.app'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
