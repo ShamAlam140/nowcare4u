@@ -1,0 +1,22 @@
+"use client"
+import { useEffect } from 'react';
+import {useRouter, useSearchParams} from 'next/navigation';
+import { useUser } from '@/providers/UserProvider';
+import BMICalc from './BMICalc';
+
+export default function BMICalcApp() {
+  const { user, token } = useUser();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (!user || !token) {
+      const redirect = encodeURIComponent(location.pathname + location.search);
+      router.push(`/login?redirect=${redirect}`);
+    }
+  }, [user, token, router, searchParams]);
+
+  if (!user || !token) return null;
+
+  return <BMICalc />;
+}
