@@ -1,8 +1,7 @@
 // API configuration for development and production
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-// In development, use the proxy (/api)
-// In production, use the full backend URL
+
 export const API_BASE_URL = isDevelopment
     ? 'https://nowcare4u.onrender.com/api'
     : 'https://nowcare4u.onrender.com/api';
